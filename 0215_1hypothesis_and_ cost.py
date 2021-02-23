@@ -1,6 +1,8 @@
 import tensorflow as tf
 import numpy as np
 
+import matplotlib.pyplot as plt
+
 # 인풋 데이터
 x_data = [1, 2, 3, 4, 5] 
 # 아웃풋 데이터
@@ -30,3 +32,11 @@ for i in range(100+1):
     b.assign_sub(learning_rate * b_grad)
     if i % 10 == 0:
         print("{:5}|{:10.4f}|{:10.4}|{:10.6f}".format(i, w.numpy(), b.numpy(), cost))
+
+
+# print(w * 5 + b)
+# print(w * 2.5 + b)
+
+plt.plot(x_data, y_data, 'o')
+plt.plot(x_data, hypothesis.numpy(), 'r-')
+plt.ylim(0, 8)
