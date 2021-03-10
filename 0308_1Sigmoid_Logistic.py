@@ -23,4 +23,24 @@ plt.scatter(x_test[0][0],x_test[0][1], c="red")
 plt.xlabel("x1")
 plt.xlabel("x2")
 plt.show()
+
+dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train)).batch(len(x_train))#.repeat()
+
+W = tf.Variable(tf.zeros([2,1]), name = 'weight')
+B = tf.Variable(tf.zeros([1]), name='bias')
+
+def logistic_regression(features):
+    hypothesis = tf.divide(1., 1. + tf.exp(tf.matmul(features, W) + B))
+    return hypothesis
+
+def loss_fn(hypothesis, labels):
+    cost = -tf.reduce_mean(labels * tf.math.log(hypothesis) + (1 - labels) * tf.math.log(1 - hypothesis))
+    return cost
+
+optimizer = tf.keras.optimizers.SGD(learning_rate=0.01)
+
+def accuracy_fn(hypothesis, labels):
+    predicted = tf.cast(hypothesis > 0.5, dtype=tf.float32)
+    accuracy = tf.reduce_mean(tf.cast(tf.equal(predicted, labels), dtype=tf.int32))
+    return accuracy
 # %%
